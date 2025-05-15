@@ -1,0 +1,33 @@
+
+import csv
+from tabulate import tabulate
+
+# Data for the CSV file
+data = [
+    ["Accident_ID", "Date", "Time", "Location", "Weather_Condition", "Road_Surface", "Vehicle_Type", "Speed_kmph", "Driver_Age", "Accident_Severity"],
+    ["A1001", "2024-11-21", "18:45", "New York, NY", "Rainy", "Wet", "Car", 65, 32, "High"],
+    ["A1002", "2024-12-05", "14:10", "Los Angeles, CA", "Clear", "Dry", "Truck", 50, 45, "Medium"],
+    ["A1003", "2024-10-02", "23:30", "Houston, TX", "Fog", "Wet", "Motorbike", 70, 28, "High"],
+    ["A1004", "2024-11-15", "07:20", "Chicago, IL", "Snow", "Icy", "Car", 40, 36, "Low"],
+    ["A1005", "2024-12-30", "21:00", "Phoenix, AZ", "Clear", "Dry", "SUV", 55, 52, "Medium"]
+]
+
+# Create the CSV file
+filename = 'traffic_accident_data.csv'
+with open(filename, mode='w', newline='') as file:
+    writer = csv.writer(file)
+    writer.writerows(data)
+
+# Read and display the CSV content
+print(f"Contents of '{filename}':\n")
+with open(filename, mode='r') as file:
+    reader = csv.reader(file)
+    print(tabulate(list(reader), headers="firstrow", tablefmt="grid"))
+
+# Additional analysis
+print("\nBasic Statistics:")
+print(f"- Total accidents: {len(data)-1}")  # Subtract 1 for header
+print("- Accident severity counts:")
+severities = [row[-1] for row in data[1:]]
+for severity in set(severities):
+    print(f"  {severity}: {severities.count(severity)}")
